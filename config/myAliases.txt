@@ -1,0 +1,4 @@
+{
+# put your aliases here in this format:
+  cat = "bat";
+}

@@ -1,0 +1,8 @@
+# put your ssh hosts here like the following
+        Host *
+          ServerAliveInterval 600
+        Host vm
+          HostName 192.168.122.120
+          Port 22
+          User root
+

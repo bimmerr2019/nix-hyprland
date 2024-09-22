@@ -1,0 +1,49 @@
+#!/usr/bin/env bash
+
+PROMPT=$1
+DIR1=$2
+# Function to generate the preview command with the full path
+preview_command() {
+    local selected_file="$1"
+    local full_path="$DIR1$selected_file"
+    echo "bat --theme 'Monokai Extended' --color=always $full_path"
+}
+# Prompt the user for the search term
+clear
+#read -p "Search your Notes! Enter search term: " search_term
+
+prompt="Search $PROMPT files!"
+search_message="Enter search term:"
+
+# Calculate the centered column position
+let col=(${COLUMNS}-${#prompt})/2
+let col1=(${COLUMNS}-${#prompt})/2
+
+# Move the cursor down two lines
+tput cup $((LINES / 2)) ${col}
+
+# Print the prompt message in amber and bold
+printf '\033[38;5;214;1m%b \n' "${prompt}"
+
+# Move the cursor one line down and right by the same amount
+tput cup $(((LINES / 2)+1)) ${col1}
+
+# Print the search message in amber and bold
+printf '\033[38;5;214;1m%b ' "${search_message}"
+
+# Read user input
+IFS='' read -r search_term
+
+# Restore normal terminal attributes
+printf '\033[0m'
+
+# Use rg to find files, awk to extract the full path, and sed to remove the directory path
+# Then, use fzf with a dynamic preview command
+choice=$(rg -i --hidden --fixed-strings "$search_term" $DIR1 | awk -F: '{print $1}' | sed "s|^$DIR1||" | sort | uniq | fzf --preview "$(preview_command {})" --preview-window 'right:65%')
+
+# Only proceed if a choice was made
+if [[ -n "$choice" ]]; then
+    full_path="$DIR1$choice"
+    exec xdg-open "$full_path"
+    grep --color=always "$search_term" "$full_path"
+fi
