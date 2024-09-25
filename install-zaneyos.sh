@@ -56,7 +56,7 @@ fi
 echo "-----"
 
 echo "Cloning & Entering ZaneyOS Repository"
-git clone https://github.com/bimmerr2019/nix-hyprland.git
+git clone https://github.com/bimmerr2019/nix-hyprland.git $HOME/zaneyos
 cd zaneyos || exit
 mkdir hosts/"$hostName"
 cp hosts/default/*.nix hosts/"$hostName"

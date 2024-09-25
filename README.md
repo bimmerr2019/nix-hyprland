@@ -60,7 +60,7 @@ Simply copy this and run it:
 
 ```
 nix-shell -p git curl
-sh <(curl -L https://github.com/bimmerr2019/nix-hyprland/-/raw/main/install-zaneyos.sh)
+sh <(curl -L https://github.com/bimmerr2019/nix-hyprland/raw/main/install-zaneyos.sh)
 ```
 
 #### 🦽 Manual:
@@ -74,7 +74,7 @@ nix-shell -p git vim
 Clone this repo & enter it:
 
 ```
-git clone https://github.com/bimmerr2019/nix-hyprland.git
+git clone https://github.com/bimmerr2019/nix-hyprland.git $HOME/zaneyos
 cd zaneyos
 ```
 
