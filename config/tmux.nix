@@ -28,17 +28,16 @@ in
       {
         plugin = resurrect;
         extraConfig = ''
-          set -g @resurrect-capture-pane-contents 'on'
-          set -g @resurrect-strategy-vim 'session'
-          set -g @resurrect-strategy-nvim 'session'
-          set -g @resurrect-dir '~/.tmux/resurrect'
+        set -g @resurrect-capture-pane-contents 'on'
+        set -g @resurrect-dir '~/.tmux/resurrect'
+ 
         '';
       }
       {
         plugin = continuum;
         extraConfig = ''
-          set -g @continuum-restore 'on'
-          set -g @continuum-save-interval '15'  # Save every 15 minutes
+        set -g @continuum-restore 'on'
+        set -g @continuum-save-interval '1'
         '';
       }
     ];
