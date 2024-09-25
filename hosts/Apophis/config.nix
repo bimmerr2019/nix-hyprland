@@ -21,17 +21,17 @@ in
   imports = [
     ./hardware.nix
     ./users.nix
-    ../../modules/amd-drivers.nix
-    ../../modules/nvidia-drivers-libre.nix
-    ../../modules/nvidia-prime-drivers.nix
-    ../../modules/intel-drivers.nix
+    # ../../modules/amd-drivers.nix
+    ../../modules/nvidia-drivers.nix
+    # ../../modules/nvidia-prime-drivers.nix
+    # ../../modules/intel-drivers.nix
     ../../modules/vm-guest-services.nix
     ../../modules/local-hardware-clock.nix
   ];
 
   boot = {
     # Kernel
-    kernelPackages = pkgs.linuxPackages_xanmod_latest;
+    kernelPackages = pkgs.linuxPackages_zen;
     # This is for OBS Virtual Cam Support
     # kernelModules = [ "v4l2loopback" ];
     # extraModulePackages = [ config.boot.kernelPackages.v4l2loopback ];
@@ -123,7 +123,7 @@ in
 
   # Extra Module Options
   # drivers.amdgpu.enable = false;
-   # drivers.nvidia.enable = true;
+   drivers.nvidia.enable = false;
    # drivers.nvidia-prime = {
    #    enable = true;
    #    intelBusID = "PCI:0:2:0";
@@ -317,6 +317,8 @@ in
     greetd.tuigreet
     sl
     newsboat
+    calibre
+    signal-desktop
 
     #phone (flash the phone and get adb so can send files):
     android-udev-rules

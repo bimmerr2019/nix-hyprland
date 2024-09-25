@@ -201,6 +201,7 @@ fs=yes
 sid=1
 sub-auto=fuzzy
 sub-file-paths=subtitles
+save-position-on-quit
       '';
     };
     "sc-im/scimrc" = {

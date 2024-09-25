@@ -107,6 +107,8 @@
         "xx" = "config-cycle statusbar.show never always;; config-cycle tabs.show never always";
         "K" = "tab-next";
         "J" = "tab-prev";
+        "<Alt-k>" = "tab-next";
+        "<Alt-j>" = "tab-prev";
       };
     };
     
