@@ -70,6 +70,12 @@ in
     '';
   };
 
+  # Add this section to set the permissions for the tuigreet cache directory
+  system.activationScripts.tuigreet-permissions = ''
+    mkdir -p /var/cache/tuigreet
+    chmod 777 /var/cache/tuigreet
+  '';
+
   # Styling Options
   stylix = {
     enable = true;

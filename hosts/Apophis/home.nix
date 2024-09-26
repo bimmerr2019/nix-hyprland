@@ -45,7 +45,7 @@ in
     ../../config/hyprland.nix
     ../../config/yt-dlp.nix
     ../../config/neovim.nix
-    ../../config/tmux.nix
+    ../../config/tmux_new.nix
     ../../config/qutebrowser.nix
     ../../config/hn.nix
     ../../config/empty-dirs.nix
