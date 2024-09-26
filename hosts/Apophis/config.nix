@@ -301,6 +301,9 @@ in
     virt-viewer
     virt-manager
     sshfs
+    ncmpcpp
+    mpc-cli
+    lazygit
     swappy
     appimage-run
     networkmanagerapplet
