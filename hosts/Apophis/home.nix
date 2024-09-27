@@ -64,6 +64,7 @@ in
   # Place Files Inside Home Directory
   home.file = scriptFileEntries // {
     ".ssh/config".source = ../../config/ssh_config;
+    ".config/hypr/pyprland.toml".source = ../../config/pyprland.toml;
     "Pictures/Wallpapers" = {
       source = ../../config/wallpapers;
       recursive = true;

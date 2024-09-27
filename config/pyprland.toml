@@ -1,0 +1,54 @@
+[pyprland]
+plugins = [
+  "scratchpads",
+#  "lost_windows",
+#  "monitors",
+#  "shift_monitors",
+#  "toggle_dpms",
+  "magnify",
+  "expose",
+#  "shift_monitors",
+  "workspaces_follow_focus",
+]
+
+[workspaces_follow_focus]
+max_workspaces = 9
+
+[expose]
+include_special = false
+
+[scratchpads.yazi]
+animation = "fromTop"
+command = "kitty --class yazi -e yazi ~"
+class = "yazi"
+size = "75% 60%"
+
+[scratchpads.movies]
+animation = "fromTop"
+command = "kitty --class movies -e launch_movies.sh"
+class = "movies"
+size = "75% 60%"
+
+[scratchpads.books]
+animation = "fromTop"
+command = "kitty --class books -e launch_books.sh"
+class = "books"
+size = "75% 60%"
+
+[scratchpads.llm]
+animation = "fromTop"
+command = "kitty --class llm -e ollama run llama3.1"
+class = "llm"
+size = "75% 60%"
+
+[scratchpads.mutt]
+animation = "fromTop"
+command = "kitty --class mutt -e neomutt"
+class = "mutt"
+size = "75% 60%"
+
+[scratchpads.newsboat]
+animation = "fromTop"
+command = "kitty --class newsboat -e newsboat -r"
+class = "newsboat"
+size = "75% 60%"
