@@ -37,7 +37,7 @@ size = "75% 60%"
 
 [scratchpads.llm]
 animation = "fromTop"
-command = "kitty --class llm -e ollama run llama3.1"
+command = "kitty --class llm -e ollama run llama3.2"
 class = "llm"
 size = "75% 60%"
 

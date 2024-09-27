@@ -336,6 +336,7 @@ in
 
     # neomutt and related progs:
     neomutt
+    isync
     msmtp
     mypy ruff
     mutt-wizard pass notmuch imagemagick w3m lynx abook

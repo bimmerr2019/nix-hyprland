@@ -30,7 +30,8 @@ let
     })
     scriptFiles);
   nsxiv-fullscreen = pkgs.callPackage ./nsxiv-wrapper.nix {};
-  mbsyncExtraConfig = builtins.readFile ../../config/mbsync-config.txt;
+  # need to let mutt-wizard handle this file
+  # mbsyncExtraConfig = builtins.readFile ../../config/mbsync-config.txt;
 in
 {
   # Home Manager Settings
@@ -122,10 +123,10 @@ in
     userEmail = "${gitEmail}";
   };
 
-  programs.mbsync = {
-    enable = true;
-    extraConfig = mbsyncExtraConfig;
-  };
+  # programs.mbsync = {
+  #   enable = true;
+  #   extraConfig = mbsyncExtraConfig;
+  # };
 
   # Create XDG Dirs
   xdg = {
