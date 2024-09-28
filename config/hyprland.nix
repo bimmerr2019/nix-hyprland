@@ -40,7 +40,7 @@ with lib;
           env = MOZ_ENABLE_WAYLAND, 1
           exec-once = dbus-update-activation-environment --systemd --all
           exec-once = systemctl --user import-environment QT_QPA_PLATFORMTHEME WAYLAND_DISPLAY XDG_CURRENT_DESKTOP
-          exec-once = pkill swww || true; swww init && swww img /home/${username}/Pictures/Wallpapers/0310.jpg
+          exec-once = pkill swww || true; swww init && swww img /home/${username}/Pictures/Wallpapers/0262.jpg
           exec-once = pkill waybar || true; waybar
           exec-once = pkill swaync || true; swaync
           exec-once = pkill nm-applet || true; nm-applet --indicator

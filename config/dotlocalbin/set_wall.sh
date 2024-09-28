@@ -50,16 +50,16 @@ else
 fi
 
 # Update hyprland.nix
-HYPRLAND_WALLPAPER_LINE=$(grep "exec-once = sleep 1.5 && swww img" "$HYPRLAND_CONFIG_FILE")
+HYPRLAND_WALLPAPER_LINE=$(grep "exec-once = pkill swww || true; swww init && swww img " "$HYPRLAND_CONFIG_FILE")
 
 if [ -n "$HYPRLAND_WALLPAPER_LINE" ]; then
     echo "Found wallpaper line in hyprland.nix: $HYPRLAND_WALLPAPER_LINE"
     
     # Update the Hyprland configuration file
-    sed -i "/exec-once = sleep 1.5 && swww img/c\          exec-once = sleep 1.5 && swww img /home/\${username}/Pictures/Wallpapers/$WALLPAPER_FILENAME" "$HYPRLAND_CONFIG_FILE"
+    sed -i "/exec-once = pkill swww || true; swww init && swww img/c\          exec-once = pkill swww || true; swww init && swww img /home/\${username}/Pictures/Wallpapers/$WALLPAPER_FILENAME" "$HYPRLAND_CONFIG_FILE"
     
     # Verify the change
-    NEW_HYPRLAND_WALLPAPER_LINE=$(grep "exec-once = sleep 1.5 && swww img" "$HYPRLAND_CONFIG_FILE")
+    NEW_HYPRLAND_WALLPAPER_LINE=$(grep "exec-once = pkill swww || true; swww init && swww img " "$HYPRLAND_CONFIG_FILE")
     echo "Updated wallpaper line in hyprland.nix: $NEW_HYPRLAND_WALLPAPER_LINE"
     
     if [ "$NEW_HYPRLAND_WALLPAPER_LINE" != "$HYPRLAND_WALLPAPER_LINE" ]; then

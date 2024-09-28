@@ -79,7 +79,7 @@ in
   # Styling Options
   stylix = {
     enable = true;
-    image = ../../config/wallpapers/0310.jpg;
+    image = ../../config/wallpapers/0262.jpg;
     # base16Scheme = {
     #   base00 = "232136";
     #   base01 = "2a273f";
