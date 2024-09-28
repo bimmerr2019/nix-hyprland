@@ -1,11 +1,15 @@
-{ pkgs, lib, ...  }:
+{ pkgs, lib, ... }:
+let
+  nodejs = pkgs.nodejs_20;
+  pnpm = pkgs.nodePackages.pnpm;
+in
 {
   home.packages = with pkgs; [
-    #nodejs: nvim, yarn: nostrudel, go: hn-text
     nodejs
-    yarn
+    pnpm
     go
   ];
+
   home.activation = {
     setupOrUpdateNostrudel = lib.hm.dag.entryAfter ["writeBoundary"] ''
       # Wait for network connectivity
@@ -29,7 +33,24 @@
         echo "Setting up nostrudel for the first time..."
         ${pkgs.git}/bin/git clone https://github.com/hzrd149/nostrudel.git "$HOME/nostrudel"
       fi
-      cd "$HOME/nostrudel" && ${pkgs.yarn}/bin/yarn install
+      cd "$HOME/nostrudel"
+      
+      # Use pnpm to install dependencies
+      export PATH="${nodejs}/bin:${pnpm}/bin:$PATH"
+      ${pnpm}/bin/pnpm install --frozen-lockfile
     '';
   };
+
+  home.sessionVariables = lib.mkForce {
+    PATH = "${pnpm}/bin:$HOME/.local/bin:$PATH";
+  };
+
+  home.file.".local/bin/nostr" = {
+    text = ''
+      #!/bin/sh
+      cd $HOME/nostrudel && ${pnpm}/bin/pnpm dev
+    '';
+    executable = true;
+  };
+
 }

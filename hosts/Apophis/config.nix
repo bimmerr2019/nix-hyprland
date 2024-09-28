@@ -9,14 +9,14 @@
 }:
 let
   inherit (import ./variables.nix) keyboardLayout;
-  python-packages = pkgs.python3.withPackages (
-    ps:
-      with ps; [
-        requests
-        pyquery # needed for hyprland-dots Weather script
-        ]
-    );
-
+  myPython = pkgs.python39.withPackages (ps: with ps; [
+    requests
+    pyquery
+    python-dateutil
+    pyqt5
+    pyqtwebengine
+    # Add any other packages you need
+  ]);
 in
 {
   imports = [
@@ -364,6 +364,7 @@ in
     xdotool
     zsh-completions
     nix-zsh-completions
+    myPython
     nwg-look
     conda
 
@@ -390,9 +391,11 @@ in
       categories = [ "Utility" ];
       terminal = false;
     })
-  ] ++ [
-	  python-packages
   ];
+
+  environment.sessionVariables = {
+    PYTHONPATH = "${myPython}/${myPython.sitePackages}";
+  };
 
   #touch yubikey for sudo
   security.pam.services.sudo = {
