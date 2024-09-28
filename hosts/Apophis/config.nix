@@ -16,11 +16,13 @@ let
         pyquery # needed for hyprland-dots Weather script
         ]
     );
+
 in
 {
   imports = [
     ./hardware.nix
     ./users.nix
+    ./qtodotxt.nix
     # ../../modules/amd-drivers.nix
     ../../modules/nvidia-drivers.nix
     # ../../modules/nvidia-prime-drivers.nix
@@ -362,6 +364,8 @@ in
     xdotool
     zsh-completions
     nix-zsh-completions
+    nwg-look
+    conda
 
   # Optionally, add a convenient way to run AppImages
     (writeShellScriptBin "run-appimage" ''
