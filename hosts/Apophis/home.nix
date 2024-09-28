@@ -32,6 +32,7 @@ let
   nsxiv-fullscreen = pkgs.callPackage ./nsxiv-wrapper.nix {};
   # need to let mutt-wizard handle this file
   # mbsyncExtraConfig = builtins.readFile ../../config/mbsync-config.txt;
+  pnpm = pkgs.nodePackages.pnpm;
 in
 {
   # Home Manager Settings
@@ -409,10 +410,11 @@ audio_output {
   };
 
   home.sessionVariables = {
+    # PATH = "${pnpm}/bin:$HOME/.local/bin:$PATH";
     PATH = "$HOME/.local/bin:$PATH";
     DISABLE_AUTO_TITLE = "true";
     SUDO_EDITOR = "${pkgs.neovim}/bin/nvim";
-    #EDITOR = "${pkgs.neovim}/bin/nvim";
+    # EDITOR = "${pkgs.neovim}/bin/nvim";
     VISUAL = "${pkgs.neovim}/bin/nvim";
     PDFVIEWER = "${pkgs.zathura}/bin/zathura";
     TERMINAL = "${pkgs.kitty}/bin/kitty";

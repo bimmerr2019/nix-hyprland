@@ -41,10 +41,6 @@ in
     '';
   };
 
-  home.sessionVariables = lib.mkForce {
-    PATH = "${pnpm}/bin:$HOME/.local/bin:$PATH";
-  };
-
   home.file.".local/bin/nostr" = {
     text = ''
       #!/bin/sh
