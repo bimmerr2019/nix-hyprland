@@ -165,7 +165,6 @@ in
   };
 
   programs = {
-    firefox.enable = false;
     proxychains = {
       enable = true;
       proxyDNS = true;
@@ -176,7 +175,9 @@ in
       remoteDNSSubnet = 224;
       tcpConnectTimeOut = 8000;
       proxies.nekoray =
-        { type = "socks5";
+        {
+          enable = true;
+          type = "socks5";
           host = "127.0.0.1";
           port = 2080;
         };
