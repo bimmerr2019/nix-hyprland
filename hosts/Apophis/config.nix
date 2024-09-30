@@ -358,7 +358,7 @@ in
     nfs-utils
     screenkey
     tlrc
-    tor-browser
+    tor-browser-bundle-bin
     torsocks
     trash-cli
     xdotool
@@ -366,7 +366,8 @@ in
     nix-zsh-completions
     myPython
     nwg-look
-    conda
+    libreoffice
+    wireguard-tools
 
   # Optionally, add a convenient way to run AppImages
     (writeShellScriptBin "run-appimage" ''
@@ -649,6 +650,19 @@ in
     dockerCompat = true;
     defaultNetwork.settings.dns_enabled = true;
   };
+
+  # Wireguard: UNCOMMENT to have a wireguard tunnel. put the config files in /etc/nixos/wireguard:
+# .rw-r--r-- 290 root 30 Sep 08:35  jp-osa-wg-001.conf
+# .rw-r--r-- 291 root 30 Sep 08:35  jp-osa-wg-002.conf
+# .rw-r--r-- 291 root 30 Sep 08:35  jp-osa-wg-003.conf
+# .rw-r--r-- 291 root 30 Sep 08:35  jp-osa-wg-004.conf
+# .rw-r--r-- 273 root 30 Sep 08:35  jp-tok-jp2.conf
+# .rw-r--r-- 291 root 30 Sep 08:35  jp-tyo-wg-001.conf
+# .rw-r--r-- 291 root 30 Sep 08:35  jp-tyo-wg-002.conf
+# .rw-r--r-- 291 root 30 Sep 08:35  jp-tyo-wg-201.conf
+# .rw-r--r-- 289 root 30 Sep 08:35  jp-tyo-wg-202.conf
+# .rw-r--r-- 290 root 30 Sep 08:35  jp-tyo-wg-203.conf
+  # networking.wg-quick.interfaces.wg0.configFile = "/etc/nixos/wireguard/jp-tok-jp2.conf";
 
   # OpenGL
   hardware.graphics.enable = true;
