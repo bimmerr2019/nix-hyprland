@@ -166,6 +166,21 @@ in
 
   programs = {
     firefox.enable = false;
+    proxychains = {
+      enable = true;
+      proxyDNS = true;
+      localnet = "127.0.0.0/255.0.0.0";
+      quietMode = true;
+      chain.type = "strict";
+      tcpReadTimeOut = 15000;
+      remoteDNSSubnet = 224;
+      tcpConnectTimeOut = 8000;
+      proxies.nekoray =
+        { type = "socks5";
+          host = "127.0.0.1";
+          port = 2080;
+        };
+    };
     starship = {
       enable = true;
       settings = {
@@ -368,6 +383,8 @@ in
     nwg-look
     libreoffice
     wireguard-tools
+    nekoray
+    floorp
 
   # Optionally, add a convenient way to run AppImages
     (writeShellScriptBin "run-appimage" ''
