@@ -434,7 +434,16 @@ audio_output {
       enable = true;
       settings = {
         vim_keys = true;
+        rounded_corners = true;
+        graph_symbol = "braille";
       };
+      extraConfig = ''
+        #* Starts bottom on a specified span or "full" (uses full span of monitor)
+        #* Example: "left_right" (uses the two leftmost and rightmost quarters of the screen)
+        #* or "1:2" (uses span 1 and 2)
+        #* Default: "full"
+        shown_spans="full"
+      '';
     };
     fzf = {
       enable = true;

@@ -346,6 +346,7 @@ in
     newsboat
     calibre
     signal-desktop
+    session-desktop-appimage
 
     #phone (flash the phone and get adb so can send files):
     android-udev-rules
