@@ -147,7 +147,7 @@ in
   networking.timeServers = options.networking.timeServers.default ++ [ "pool.ntp.org" ];
 
   # Set your time zone.
-  time.timeZone = "Asia/Shanghai";
+  time.timeZone = "Asia/Tokyo";
 
   # Select internationalisation properties.
   i18n.defaultLocale = "en_US.UTF-8";
@@ -347,6 +347,7 @@ in
     calibre
     signal-desktop
     session-desktop-appimage
+    simplex-chat-desktop
 
     #phone (flash the phone and get adb so can send files):
     android-udev-rules
