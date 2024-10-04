@@ -428,6 +428,54 @@ audio_output {
   };
 
   programs = {
+    zathura = {
+      enable = true;
+      options = {
+        database = "sqlite";
+      };
+      extraConfig = ''
+set sandbox none
+set statusbar-h-padding 0
+set statusbar-v-padding 0
+set page-padding 1
+set selection-clipboard clipboard
+map u scroll half-up
+map d scroll half-down
+map D toggle_page_mode
+map r reload
+map R rotate
+map K zoom in
+map J zoom out
+map i recolor
+map p print
+map g goto top
+#set default-bg "rgba(255,255,255,0.3)"
+
+set adjust-open "best-fit"
+set default-bg "#1a1e2a" #00
+set default-fg "#F7F7F6" #01
+
+set statusbar-fg "#ffffff" #04
+set statusbar-bg "#1a1e2a" #01
+
+set highlight-color "#5294E2" #0A
+set highlight-active-color "#6A9FB5" #0D
+
+set notification-bg "#90A959" #0B
+set notification-fg "#151515" #00
+
+set guioptions none
+#set recolor "true"
+set recolor-lightcolor "#1a1e2a"
+set recolor-darkcolor "#ffffff"
+set recolor-keephue "true"
+set selection-clipboard clipboard
+
+#map p navigate previous
+#map n navigate next
+
+      '';
+    };
     zoxide.enable = true;
     gh.enable = true;
     btop = {

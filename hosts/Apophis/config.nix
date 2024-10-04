@@ -277,6 +277,10 @@ in
     mutableUsers = true;
   };
 
+  documentation.man.generateCaches = true;
+  documentation.man.enable = true;
+  documentation.man.man-db.enable = true;
+
   environment.systemPackages = with pkgs; [
     vim
     wget
@@ -286,6 +290,10 @@ in
     cmatrix
     lolcat
     htop
+    wofi
+    groff
+    man-db
+    man-pages
     brave
     udiskie
     pyprland
@@ -700,7 +708,7 @@ in
 # .rw-r--r-- 291 root 30 Sep 08:35  jp-tyo-wg-201.conf
 # .rw-r--r-- 289 root 30 Sep 08:35  jp-tyo-wg-202.conf
 # .rw-r--r-- 290 root 30 Sep 08:35  jp-tyo-wg-203.conf
-  # networking.wg-quick.interfaces.wg0.configFile = "/etc/nixos/wireguard/jp-tok-jp2.conf";
+  networking.wg-quick.interfaces.wg0.configFile = "/etc/nixos/wireguard/jp-tok-jp2.conf";
 
   # OpenGL
   hardware.graphics.enable = true;
