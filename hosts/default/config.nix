@@ -346,8 +346,8 @@ in
     newsboat
     calibre
     signal-desktop
-    session-desktop-appimage
-    simplex-chat-desktop
+    # session-desktop-appimage
+    # simplex-chat-desktop
 
     #phone (flash the phone and get adb so can send files):
     android-udev-rules
@@ -394,6 +394,24 @@ in
       ${appimage-run}/bin/appimage-run /opt/appimages/$1
     '')
   # Add a desktop file for each appimage here:
+    (makeDesktopItem {
+      name = "Session";
+      desktopName = "Session";
+      exec = "${pkgs.appimage-run}/bin/appimage-run /opt/appimages/session-desktop-linux-x86_64-1.14.2.AppImage";
+      icon = ""; # Leave empty if there's no icon
+      comment = "Session Application";
+      categories = [ "Utility" ];
+      terminal = false;
+    })
+    (makeDesktopItem {
+      name = "SimpleX";
+      desktopName = "SimpleX";
+      exec = "${pkgs.appimage-run}/bin/appimage-run /opt/appimages/simplex-desktop-x86_64.AppImage";
+      icon = ""; # Leave empty if there's no icon
+      comment = "SimpleX Application";
+      categories = [ "Utility" ];
+      terminal = false;
+    })
     (makeDesktopItem {
       name = "LMStudio";
       desktopName = "LM Studio";
@@ -682,7 +700,7 @@ in
 # .rw-r--r-- 291 root 30 Sep 08:35  jp-tyo-wg-201.conf
 # .rw-r--r-- 289 root 30 Sep 08:35  jp-tyo-wg-202.conf
 # .rw-r--r-- 290 root 30 Sep 08:35  jp-tyo-wg-203.conf
-  # networking.wg-quick.interfaces.wg0.configFile = "/etc/nixos/wireguard/jp-tok-jp2.conf";
+  networking.wg-quick.interfaces.wg0.configFile = "/etc/nixos/wireguard/jp-tok-jp2.conf";
 
   # OpenGL
   hardware.graphics.enable = true;
