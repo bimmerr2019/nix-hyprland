@@ -33,13 +33,14 @@ with lib;
           env = XDG_SESSION_DESKTOP, Hyprland
           env = GDK_BACKEND, wayland, x11
           env = CLUTTER_BACKEND, wayland
-          env = QT_QPA_PLATFORM=wayland;xcb
+          env = QT_QPA_PLATFORM,wayland;xcb
+          env = QT_QPA_PLATFORMTHEME,qt5ct
           env = QT_WAYLAND_DISABLE_WINDOWDECORATION, 1
           env = QT_AUTO_SCREEN_SCALE_FACTOR, 1
           env = SDL_VIDEODRIVER, x11
           env = MOZ_ENABLE_WAYLAND, 1
           exec-once = dbus-update-activation-environment --systemd --all
-          exec-once = systemctl --user import-environment QT_QPA_PLATFORMTHEME WAYLAND_DISPLAY XDG_CURRENT_DESKTOP
+          exec-once = systemctl --user import-environment QT_QPA_PLATFORMTHEME WAYLAND_DISPLAY XDG_CURRENT_DESKTOP QT_QPA_PLATFORM
           exec-once = pkill swww || true; swww init && swww img /home/${username}/Pictures/Wallpapers/0262.jpg
           exec-once = pkill waybar || true; waybar
           exec-once = pkill swaync || true; swaync
