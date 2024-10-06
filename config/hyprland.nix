@@ -88,6 +88,7 @@ with lib;
           windowrule = noborder,^(wofi)$
           windowrule = center,^(wofi)$
           windowrule = center,^(steam)$
+          windowrule = tile, ^(.*.AppImage)$
           windowrule = float, nm-connection-editor|blueman-manager
           windowrule = float, swayimg|vlc|Viewnior|pavucontrol
           windowrule = float, nwg-look|qt5ct|mpv
