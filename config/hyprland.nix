@@ -1,4 +1,5 @@
 {
+  pkgs,
   lib,
   username,
   host,
@@ -49,6 +50,9 @@ with lib;
           exec-once = pkill pypr || true; pypr
           exec-once=[workspace 1 silent] kitty tmux
           exec-once=[workspace 2 silent] qutebrowser
+          exec-once = [workspace 3 silent] ${pkgs.appimage-run}/bin/appimage-run /opt/appimages/session-desktop-linux-x86_64-1.14.2.AppImage
+          exec-once = [workspace 4 silent] ${pkgs.appimage-run}/bin/appimage-run /opt/appimages/simplex-desktop-x86_64.AppImage
+          exec-once=[workspace 6 silent] keepassxc
           monitor=,preferred,auto,1
           ${extraMonitorSettings}
           general {
@@ -87,18 +91,20 @@ with lib;
           }
           windowrule = noborder,^(wofi)$
           windowrule = center,^(wofi)$
-          windowrule = center,^(steam)$
           windowrule = tile, ^(.*.AppImage)$
           windowrule = float, nm-connection-editor|blueman-manager
           windowrule = float, swayimg|vlc|Viewnior|pavucontrol
-          windowrule = float, nwg-look|qt5ct|mpv
+          windowrule = float, nwg-look|qt5ct
           windowrule = float, zoom
-          windowrulev2 = stayfocused, title:^()$,class:^(steam)$
-          windowrulev2 = minsize 1 1, title:^()$,class:^(steam)$
-          windowrulev2 = opacity 0.9 0.7, class:^(Brave)$
+          windowrulev2 = opacity 0.9 0.7, class:^(floorp)$
           windowrulev2 = workspace 2, class:^(qutebrowser)$
-          windowrulev2 = workspace 5 silent, class:^(mpv)$
-          windowrulev2 = workspace 6, class:^(keepassxc)$
+          # windowrulev2 = workspace 3, class:^(floorp)$
+          windowrulev2 = workspace 3, class:^(Session)$
+          windowrulev2 = workspace 4, class:^(chat-simplex-desktop-MainKt)$
+          windowrulev2 = workspace 5, class:^(mpv)$
+          windowrulev2 = workspace 6, class:^(org.keepassxc.KeePassXC)$
+          windowrulev2 = workspace 7, class:^(QTodoTxt2)$
+          windowrulev2 = workspace 8, class:^(org.pwmt.zathura)$
           gestures {
             workspace_swipe = true
             workspace_swipe_fingers = 3

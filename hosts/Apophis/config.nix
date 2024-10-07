@@ -401,6 +401,7 @@ in
     (writeShellScriptBin "run-appimage" ''
       ${appimage-run}/bin/appimage-run /opt/appimages/$1
     '')
+
   # Add a desktop file for each appimage here:
     (makeDesktopItem {
       name = "Session";
