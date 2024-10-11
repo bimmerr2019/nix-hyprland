@@ -26,6 +26,7 @@ with lib;
           "hyprland/window"
           "pulseaudio"
           "cpu"
+          "temperature"
           "memory"
           "idle_inhibitor"
 	        "custom/btc"
@@ -82,6 +83,18 @@ with lib;
           format = " {}%";
           tooltip = true;
         };
+
+        "temperature" = {
+            interval= 10;
+            tooltip= true;
+            hwmon-path-abs= "/sys/devices/platform/coretemp.0/hwmon"; 
+            input-filename= "temp1_input";
+            critical-threshold= 82;
+            format-critical= "{temperatureC}°C {icon}";
+            format= "{temperatureC}°C {icon}";
+            format-icons= ["󰈸"];
+        };
+
         "cpu" = {
           interval = 5;
           format = " {usage:2}%";
@@ -265,7 +278,7 @@ with lib;
         tooltip label {
           color: #${config.stylix.base16Scheme.base08};
         }
-        #window, #pulseaudio, #cpu, #memory, #idle_inhibitor, #custom-btc {
+        #window, #pulseaudio, #cpu, #temperature, #memory, #idle_inhibitor, #custom-btc {
           font-weight: bold;
           margin: 4px 0px;
           margin-left: 7px;

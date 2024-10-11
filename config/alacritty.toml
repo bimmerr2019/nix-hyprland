@@ -1,0 +1,13 @@
+[font]
+size = 22.0
+
+[shell]
+args = ["--login"]
+program = "/etc/profiles/per-user/bimmer/bin/zsh"
+
+[window]
+opacity = 0.6
+
+[window.padding]
+x = 10
+y = 10

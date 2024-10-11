@@ -67,6 +67,7 @@ in
   home.file = scriptFileEntries // {
     ".ssh/config".source = ../../config/ssh_config;
     ".config/hypr/pyprland.toml".source = ../../config/pyprland.toml;
+    ".config/alacritty/alacritty.toml".source = ../../config/alacritty.toml;
     "Pictures/Wallpapers" = {
       source = ../../config/wallpapers;
       recursive = true;

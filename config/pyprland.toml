@@ -46,6 +46,7 @@ animation = "fromTop"
 command = "kitty --class mutt -e neomutt"
 class = "mutt"
 size = "75% 60%"
+unfocus =  "hide"
 
 [scratchpads.newsboat]
 animation = "fromTop"

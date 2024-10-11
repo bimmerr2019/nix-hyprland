@@ -4,7 +4,7 @@ let
   inherit (import ../hosts/${host}/variables.nix) terminal browser;
 in
 pkgs.writeShellScriptBin "list-hypr-bindings" ''
-  yad --width=800 --height=650 \
+  yad --width=1300 --height=650 \
   --center \
   --fixed \
   --title="Hyprland Keybindings" \
@@ -15,18 +15,25 @@ pkgs.writeShellScriptBin "list-hypr-bindings" ''
   --column=Command: \
   --timeout=90 \
   --timeout-indicator=right \
-  " = Windows/Super/CAPS LOCK" "Modifier Key, used for keybindings" "Doesn't really execute anything by itself." \
+  " = SUPER" "Modifier Key, used for keybindings" "Doesn't really do anything." \
   " + ENTER" "Terminal" "${terminal}" \
-  " + SHIFT + ENTER" "App Launcher" "rofi" \
+  " + H" "This Key Help!" "list-hypr-bindings" \
+  " + D" "App Launcher" "rofi-launcher" \
+  " + SHIFT + ENTER" "Alternate Terminal" "alacritty" \
+  " + Y" "scatchpad yazi" "yazi" \
+  " + M" "scatchpad movies" "launch_movies.sh" \
+  " + B" "scratchpad books" "launch_books.sh" \
+  " + L" "scatchpad LLM" "ollama" \
+  " + E" "scratchpad email" "mutt" \
+  " + N" "scratchpad rss reader" "newsboat" \
   " + ALT + W" "Change Wallpaper" "wallsetter" \
   " + Q" "Kill Focused Window" "killactive" \
   " + SHIFT + W" "Search Websites Like Nix Packages" "web-search" \
   " + SHIFT + N" "Reload SwayNC Styling" "swaync-client -rs" \
   " + W" "Launch Web Browser" "${browser}" \
-  " + E" "Launch Emoji Selector" "emopicker9000" \
-  " + S" "Take Screenshot" "screenshootin" \
-  " + D" "Launch Discord" "discord" \
-  " + N" "Launch New File Browser Window" "thunar" \
+  " + SHIFT + E" "Launch Emoji Selector" "emopicker9000" \
+  " + S" "Take Selectable Screenshot" "screenshootin area" \
+  " + PrtSc" "Take Full Screenshot" "screenshootin full" \
   " + P" "Pseudo Tiling" "pseudo" \
   " + SHIFT + I" "Toggle Split Direction" "togglesplit" \
   " + F" "Toggle Focused Fullscreen" "fullscreen" \
