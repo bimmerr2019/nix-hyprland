@@ -18,6 +18,7 @@ pkgs.writeShellScriptBin "list-hypr-bindings" ''
   " = SUPER" "Modifier Key, used for keybindings" "Doesn't really do anything." \
   " + ENTER" "Terminal" "${terminal}" \
   " + H" "This Key Help!" "list-hypr-bindings" \
+  " + ?" "This Key Help!" "list-hypr-bindings" \
   " + D" "App Launcher" "rofi-launcher" \
   " + SHIFT + ENTER" "Alternate Terminal" "alacritty" \
   " + Y" "scatchpad yazi" "yazi" \
@@ -28,9 +29,9 @@ pkgs.writeShellScriptBin "list-hypr-bindings" ''
   " + N" "scratchpad rss reader" "newsboat" \
   " + ALT + W" "Change Wallpaper" "wallsetter" \
   " + Q" "Kill Focused Window" "killactive" \
-  " + SHIFT + W" "Search Websites Like Nix Packages" "web-search" \
+  " + W" "Web Searcher on steroids" "web-search" \
   " + SHIFT + N" "Reload SwayNC Styling" "swaync-client -rs" \
-  " + W" "Launch Web Browser" "${browser}" \
+  " + SHIFT + W" "Launch Web Browser" "${browser}" \
   " + SHIFT + E" "Launch Emoji Selector" "emopicker9000" \
   " + S" "Take Selectable Screenshot" "screenshootin area" \
   " + PrtSc" "Take Full Screenshot" "screenshootin full" \

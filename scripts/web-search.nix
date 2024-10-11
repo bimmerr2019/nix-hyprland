@@ -1,43 +1,76 @@
 { pkgs }:
 
-pkgs.writeShellScriptBin "web-search" ''
+let
+  urls = ''
     declare -A URLS
-
     URLS=(
-      ["🌎 Search"]="https://search.brave.com/search?q="
-      ["❄️  Unstable Packages"]="https://search.nixos.org/packages?channel=unstable&from=0&size=50&sort=relevance&type=packages&query="
-      ["🎞️ YouTube"]="https://www.youtube.com/results?search_query="
+      ["📹 YouTube"]="https://www.youtube.com/results?search_query="
+      ["🌎 SearxNG"]="https://lili2023.dedyn.io/search?q="
+      ["🎁 Amazon"]="https://www.amazon.com/s?k="
+      ["🐃 Reddit"]="https://old.reddit.com/r/"
+      ["😢 Wikipedia"]="https://en.wikipedia.org/?search="
+      ["😀 Pirate Bay"]="http://thepiratebay.org/search/"
       ["🦥 Arch Wiki"]="https://wiki.archlinux.org/title/"
-      ["🐃 Gentoo Wiki"]="https://wiki.gentoo.org/index.php?title="
+      ["🦥 Bitcoin txid"]="https://blockstream.info/tx/"
+      ["🦥 Phind"]="http://phind.com/search?q="
+      ["🦥 EBay"]="http://ebay.com/sch/"
+      ["🦥 Duck Duck Go"]="http://duckduckgo.com/?q="
+      ["🦥 StackOverflow"]="https://stackoverflow.com/search?s=8c0c0bf1-cb55-4552-80f7-78496b8b952a&q="
+      ["🦥 Subtitles"]="https://yifysubtitles.ch/search?q="
+      [" Nix Packages"]="https://search.nixos.org/packages?channel=unstable&from=0&size=50&sort=relevance&type=packages&query="
     )
+  '';
 
-    # List for rofi
-    gen_list() {
-      for i in "''${!URLS[@]}"
-      do
-        echo "$i"
-      done
-    }
+  fzfScript = ''
+    ${urls}
+    selection=$(for i in "''${!URLS[@]}"; do
+      echo "$i"
+    done | ${pkgs.fzf}/bin/fzf --prompt="Select platform: " \
+                                --height=100% \
+                                --layout=reverse \
+                                --border \
+                                --margin=0,1 \
+                                --info=hidden \
+                                --header="Select a search platform" \
+                                --header-first)
 
-    main() {
-      # Pass the list to rofi
-      platform=$( (gen_list) | ${pkgs.wofi}/bin/wofi -dmenu )
+    if [ -n "$selection" ]; then
+      echo "$selection" > /tmp/web-search-selection
+    fi
+  '';
+in
+pkgs.writeShellScriptBin "web-search" ''
+    # Use Alacritty with fzf for platform selection
+    ${pkgs.alacritty}/bin/alacritty --class floating_fzf \
+      -o window.dimensions.columns=40 \
+      -o window.dimensions.lines=8 \
+      -o window.padding.x=5 \
+      -o window.padding.y=5 \
+      -o font.size=18.0 \
+      -e ${pkgs.bash}/bin/bash -c '${fzfScript}'
 
-      if [[ -n "$platform" ]]; then
-        query=$( (echo ) | ${pkgs.wofi}/bin/wofi -dmenu )
+    # Read the selection from the temporary file
+    if [ -f /tmp/web-search-selection ]; then
+      platform=$(cat /tmp/web-search-selection)
+      rm /tmp/web-search-selection
+    else
+      exit 1
+    fi
 
-        if [[ -n "$query" ]]; then
-  	url=''${URLS[$platform]}$query
-  	xdg-open "$url"
-        else
-  	exit
-        fi
+    if [[ -n "$platform" ]]; then
+      # Use zenity for query input
+      query=$(${pkgs.zenity}/bin/zenity --entry --title="What Search term would you like dear?" --text="" --width=400)
+
+      if [[ -n "$query" ]]; then
+        ${urls}
+        url=''${URLS[$platform]}$query
+        ${pkgs.xdg-utils}/bin/xdg-open "$url"
+        # Switch to workspace 2 using Hyprland
+        ${pkgs.hyprland}/bin/hyprctl dispatch workspace 2
       else
-        exit
+        exit 1
       fi
-    }
-
-    main
-
-    exit 0
+    else
+      exit 1
+    fi
 ''
