@@ -44,7 +44,7 @@
         ];
       };
       fonts = {
-        default_size = lib.mkForce "18pt";
+        default_size = lib.mkForce "20pt";
         hints = "bold 20px default_family";
       };
       url = {

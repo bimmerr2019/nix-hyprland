@@ -9,14 +9,14 @@ let
       ["🎁 Amazon"]="https://www.amazon.com/s?k="
       ["🐃 Reddit"]="https://old.reddit.com/r/"
       ["😢 Wikipedia"]="https://en.wikipedia.org/?search="
-      ["😀 Pirate Bay"]="http://thepiratebay.org/search/"
-      ["🦥 Arch Wiki"]="https://wiki.archlinux.org/title/"
-      ["🦥 Bitcoin txid"]="https://blockstream.info/tx/"
-      ["🦥 Phind"]="http://phind.com/search?q="
+      ["🏴 Pirate Bay"]="http://thepiratebay.org/search/"
+      [" Arch Wiki"]="https://wiki.archlinux.org/title/"
+      [" Bitcoin txid"]="https://blockstream.info/tx/"
+      ["🔍 Phind"]="http://phind.com/search?q="
       ["🦥 EBay"]="http://ebay.com/sch/"
-      ["🦥 Duck Duck Go"]="http://duckduckgo.com/?q="
-      ["🦥 StackOverflow"]="https://stackoverflow.com/search?s=8c0c0bf1-cb55-4552-80f7-78496b8b952a&q="
-      ["🦥 Subtitles"]="https://yifysubtitles.ch/search?q="
+      ["🦆 Duck Duck Go"]="http://duckduckgo.com/?q="
+      ["📚 StackOverflow"]="https://stackoverflow.com/search?s=8c0c0bf1-cb55-4552-80f7-78496b8b952a&q="
+      ["💋 Subtitles"]="https://yifysubtitles.ch/search?q="
       [" Nix Packages"]="https://search.nixos.org/packages?channel=unstable&from=0&size=50&sort=relevance&type=packages&query="
     )
   '';
@@ -25,14 +25,12 @@ let
     ${urls}
     selection=$(for i in "''${!URLS[@]}"; do
       echo "$i"
-    done | ${pkgs.fzf}/bin/fzf --prompt="Select platform: " \
+    done | ${pkgs.fzf}/bin/fzf --prompt="Select a searcher: " \
                                 --height=100% \
                                 --layout=reverse \
                                 --border \
                                 --margin=0,1 \
-                                --info=hidden \
-                                --header="Select a search platform" \
-                                --header-first)
+                                --info=hidden)
 
     if [ -n "$selection" ]; then
       echo "$selection" > /tmp/web-search-selection

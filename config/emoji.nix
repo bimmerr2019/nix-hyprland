@@ -1851,5 +1851,7 @@
         🫧 bubbles soap fun carbonation sparkling
         🪪 identification card document
         🟰 heavy equals sign math
+         archlinux
+         bitcoin
   '';
 }

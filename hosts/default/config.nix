@@ -81,7 +81,7 @@ in
   # Styling Options
   stylix = {
     enable = true;
-    image = ../../config/wallpapers/0262.jpg;
+    image = ../../config/wallpapers/mecha-nostalgia.png;
     # base16Scheme = {
     #   base00 = "232136";
     #   base01 = "2a273f";
@@ -318,6 +318,7 @@ in
     unzip
     unrar
     libnotify
+    obs-studio
     v4l-utils
     ydotool
     duf

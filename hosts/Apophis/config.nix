@@ -81,7 +81,7 @@ in
   # Styling Options
   stylix = {
     enable = true;
-    image = ../../config/wallpapers/0262.jpg;
+    image = ../../config/wallpapers/mecha-nostalgia.png;
     # base16Scheme = {
     #   base00 = "232136";
     #   base01 = "2a273f";
@@ -318,6 +318,7 @@ in
     unzip
     unrar
     libnotify
+    obs-studio
     v4l-utils
     ydotool
     duf
@@ -721,7 +722,7 @@ in
 # .rw-r--r-- 291 root 30 Sep 08:35  jp-tyo-wg-201.conf
 # .rw-r--r-- 289 root 30 Sep 08:35  jp-tyo-wg-202.conf
 # .rw-r--r-- 290 root 30 Sep 08:35  jp-tyo-wg-203.conf
-  networking.wg-quick.interfaces.wg0.configFile = "/etc/nixos/wireguard/jp-tok-jp2.conf";
+  # networking.wg-quick.interfaces.wg0.configFile = "/etc/nixos/wireguard/jp-tok-jp2.conf";
 
   # OpenGL
   hardware.graphics.enable = true;
