@@ -719,7 +719,8 @@ in
 # .rw-r--r-- 289 root 30 Sep 08:35  jp-tyo-wg-202.conf
 # .rw-r--r-- 290 root 30 Sep 08:35  jp-tyo-wg-203.conf
   # networking.wg-quick.interfaces.wg0.configFile = "/etc/nixos/wireguard/jp-tok-jp2.conf";
-  networking.wg-quick.interfaces.wg0.configFile = "/etc/nixos/wireguard/tw-tai-tw1.conf";
+  # networking.wg-quick.interfaces.wg0.configFile = "/etc/nixos/wireguard/tw-tai-tw1.conf";
+  # networking.wg-quick.interfaces.wg0.configFile = "/etc/nixos/wireguard/us-pho-us-az1.conf";
 
   # OpenGL
   hardware.graphics.enable = true;
