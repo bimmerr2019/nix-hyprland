@@ -42,7 +42,7 @@ with lib;
           env = MOZ_ENABLE_WAYLAND, 1
           exec-once = dbus-update-activation-environment --systemd --all
           exec-once = systemctl --user import-environment QT_QPA_PLATFORMTHEME WAYLAND_DISPLAY XDG_CURRENT_DESKTOP QT_QPA_PLATFORM
-          exec-once = pkill swww || true; swww init && swww img /home/${username}/Pictures/Wallpapers/mecha-nostalgia.png
+          exec-once = pkill swww || true; swww init && swww img /home/${username}/Pictures/Wallpapers/0122.jpg
           exec-once = pkill waybar || true; waybar
           exec-once = pkill swaync || true; swaync
           exec-once = pkill nm-applet || true; nm-applet --indicator
@@ -218,7 +218,6 @@ with lib;
           bindm = ${modifier},mouse:273,resizewindow   # right mouse button
           bind = ALT,Tab,cyclenext
           bind = ALT,Tab,bringactivetotop
-          bind = ${modifier}SHIFT,G,exec,godot4
           bind = ${modifier}CONTROL,right,workspace,e+1
           bind = ${modifier}CONTROL,left,workspace,e-1
           bind = ${modifier},mouse_down,workspace, e+1

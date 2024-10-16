@@ -600,12 +600,12 @@ execute_on_player_state_change="pkill -RTMIN+11 dwmblocks";
         map alt+u open_url_with_hints
       '';
     };
-     oh-my-posh = {
-            enable = true;
-            useTheme = "illusi0n";
-            package = pkgs.oh-my-posh;
-            enableZshIntegration = true;
-     };
+    oh-my-posh = {
+           enable = true;
+           useTheme = "illusi0n";
+           package = pkgs.oh-my-posh;
+           enableZshIntegration = true;
+    };
      # starship = {
      #        enable = true;
      #        package = pkgs.starship;

@@ -7,7 +7,7 @@ let
       ["📹 YouTube"]="https://www.youtube.com/results?search_query="
       ["🌎 SearxNG"]="https://lili2023.dedyn.io/search?q="
       ["🎁 Amazon"]="https://www.amazon.com/s?k="
-      ["🐃 Reddit"]="https://old.reddit.com/r/"
+      ["🐃 Reddit"]="https://www.reddit.com/search/?type=link&cId=4f0baf0f-4c97-4d8d-b199-9d5079664c6f&iId=6583d929-6783-4932-9b45-36898c623ea0&q="
       ["😢 Wikipedia"]="https://en.wikipedia.org/?search="
       ["🏴 Pirate Bay"]="http://thepiratebay.org/search/"
       [" Arch Wiki"]="https://wiki.archlinux.org/title/"

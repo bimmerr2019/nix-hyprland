@@ -81,7 +81,7 @@ in
   # Styling Options
   stylix = {
     enable = true;
-    image = ../../config/wallpapers/mecha-nostalgia.png;
+    image = ../../config/wallpapers/0122.jpg;
     # base16Scheme = {
     #   base00 = "232136";
     #   base01 = "2a273f";
@@ -147,7 +147,7 @@ in
   networking.timeServers = options.networking.timeServers.default ++ [ "pool.ntp.org" ];
 
   # Set your time zone.
-  time.timeZone = "Asia/Tokyo";
+  time.timeZone = "Asia/Shanghai";
 
   # Select internationalisation properties.
   i18n.defaultLocale = "en_US.UTF-8";
@@ -272,15 +272,7 @@ in
   };
 
   nixpkgs.overlays = [
-    (self: super: {
-      signal-desktop = super.signal-desktop.overrideAttrs (oldAttrs: rec {
-        version = "7.22.2";
-        src = super.fetchurl {
-          url = "https://updates.signal.org/desktop/apt/pool/s/signal-desktop/signal-desktop_${version}_amd64.deb";
-          sha256 = "sha256-QqAE0+NZfEFjoH2VNJ5ZJMVPk/L//ugr3FyPZnL7n4Q=";
-        };
-      });
-    })
+    (import ../../config/overlays.nix)
   ];
 
   nixpkgs.config.allowUnfree = true;
@@ -319,6 +311,7 @@ in
     unrar
     libnotify
     obs-studio
+    nyx
     v4l-utils
     ydotool
     duf
@@ -409,6 +402,9 @@ in
     wireguard-tools
     nekoray
     floorp
+    rclone
+    syncthing
+    yubioath-flutter
 
   # Optionally, add a convenient way to run AppImages
     (writeShellScriptBin "run-appimage" ''
@@ -572,7 +568,7 @@ in
     };
     ipp-usb.enable = true;
     syncthing = {
-      enable = false;
+      enable = true;
       user = "${username}";
       dataDir = "/home/${username}";
       configDir = "/home/${username}/.config/syncthing";
@@ -723,6 +719,7 @@ in
 # .rw-r--r-- 289 root 30 Sep 08:35  jp-tyo-wg-202.conf
 # .rw-r--r-- 290 root 30 Sep 08:35  jp-tyo-wg-203.conf
   # networking.wg-quick.interfaces.wg0.configFile = "/etc/nixos/wireguard/jp-tok-jp2.conf";
+  networking.wg-quick.interfaces.wg0.configFile = "/etc/nixos/wireguard/tw-tai-tw1.conf";
 
   # OpenGL
   hardware.graphics.enable = true;
