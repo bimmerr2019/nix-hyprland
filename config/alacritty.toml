@@ -11,3 +11,39 @@ opacity = 0.6
 [window.padding]
 x = 10
 y = 10
+
+[[keyboard.bindings]]
+key = "J"
+mods = "Control|Shift"
+action = "ScrollLineDown"
+
+[[keyboard.bindings]]
+key = "K"
+mods = "Control|Shift"
+action = "ScrollLineUp"
+
+[[keyboard.bindings]]
+key = "U"
+mods = "Control|Shift"
+action = "ScrollPageUp"
+
+[[keyboard.bindings]]
+key = "D"
+mods = "Control|Shift"
+action = "ScrollPageDown"
+
+[[keyboard.bindings]]
+key = "Plus"
+mods = "Control|Shift"
+action = "IncreaseFontSize"
+
+[[keyboard.bindings]]
+key = "Minus"
+mods = "Control|Shift"
+action = "DecreaseFontSize"
+
+# Optional: Reset font size to default
+[[keyboard.bindings]]
+key = "Key0"
+mods = "Control"
+action = "ResetFontSize"

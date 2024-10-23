@@ -6,5 +6,4 @@ final: prev: {
       sha256 = "sha256-QqAE0+NZfEFjoH2VNJ5ZJMVPk/L//ugr3FyPZnL7n4Q=";
     };
   });
-
 }

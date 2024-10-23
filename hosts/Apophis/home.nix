@@ -99,7 +99,7 @@ in
     ".local/bin/restart-nextcloud-client.sh" = {
       text = ''
         #!/bin/sh
-        sleep 30
+        sleep 60
         systemctl --user restart nextcloud-client.service
       '';
       executable = true;
@@ -316,6 +316,7 @@ highlight article ":.*\\(embedded flash\\)$" magenta default
   stylix.targets.rofi.enable = false;
   stylix.targets.hyprland.enable = false;
   stylix.targets.tmux.enable = true;
+  stylix.targets.neovim.enable = true;
   gtk = {
     iconTheme = {
       name = "Papirus-Dark";
@@ -598,6 +599,10 @@ execute_on_player_state_change="pkill -RTMIN+11 dwmblocks";
         active_tab_font_style   bold
         inactive_tab_font_style bold
         map alt+u open_url_with_hints
+map ctrl+shift+j scroll_line_down
+map ctrl+shift+k scroll_line_up
+map ctrl+shift+u scroll_page_up
+map ctrl+shift+d scroll_page_down
       '';
     };
     oh-my-posh = {
@@ -632,6 +637,11 @@ execute_on_player_state_change="pkill -RTMIN+11 dwmblocks";
          # PROMPT=" ◉ %U%F{magenta}%n%f%u@%U%F{blue}%m%f%u:%F{yellow}%~%f %F{green}→%f "
          bindkey -r '^l'
          bindkey -r '^g'
+         bindkey -r '^[l'  # get rid of alt-L being "ls" from zsh-completions
+         # Bind ALT-l and  ALT-y to the extract_urls function as per Luke Smith suckless terminal
+         bindkey -s '^[l' 'extract_urls true\n'
+         bindkey -s '^[y' 'extract_urls false\n'
+
          bindkey -s '^G' $'clear\r'
          eval "$(fzf --zsh)"
          # bindkey '^J' down-line-or-history

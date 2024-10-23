@@ -48,6 +48,7 @@ with lib;
           exec-once = pkill nm-applet || true; nm-applet --indicator
           exec-once = pkill lxqt-policykit-agent || true; lxqt-policykit-agent
           exec-once = pkill pypr || true; pypr
+          exec-once = restart-nextcloud-client.sh &
           exec-once=[workspace 1 silent] kitty tmux
           exec-once=[workspace 2 silent] qutebrowser
           exec-once=[workspace 3 silent] ${pkgs.appimage-run}/bin/appimage-run /opt/appimages/simplex-desktop-x86_64.AppImage

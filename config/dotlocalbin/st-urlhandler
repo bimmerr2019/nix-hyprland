@@ -1,0 +1,17 @@
+#!/usr/bin/env bash
+
+urlregex="(((http|https|gopher|gemini|ftp|ftps|git)://|www\\.)[a-zA-Z0-9.]*[:;a-zA-Z0-9./+@$&%?$\#=_~-]*)|((magnet:\\?xt=urn:btih:)[a-zA-Z0-9]*)"
+
+# Use kitty's remote control to get URLs
+urls=$(kitty @ get-text | grep -aEo "$urlregex" | uniq | sed "s/$$\.\|,\|;\|\!\\|\?$$$//; s/^www./http:\/\/www\./")
+
+[ -z "$urls" ] && exit 1
+
+while getopts "hoc" o; do case "${o}" in
+    h) printf "Optional arguments for custom use:\\n  -c: copy\\n  -o: xdg-open\\n  -h: Show this message\\n" && exit 1 ;;
+    o) chosen=$(echo "$urls" | fzf --prompt='Follow which url? ' --height=10)
+       [ -n "$chosen" ] && setsid xdg-open "$chosen" >/dev/null 2>&1 & ;;
+    c) chosen=$(echo "$urls" | fzf --prompt='Copy which url? ' --height=10)
+       [ -n "$chosen" ] && echo -n "$chosen" | wl-copy ;;
+    *) printf "Invalid option: -%s\\n" "$OPTARG" && exit 1 ;;
+esac done

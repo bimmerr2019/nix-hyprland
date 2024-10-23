@@ -1,11 +1,14 @@
-{ pkgs, inputs, ... }:
-let
+{
+  config,
+  pkgs,
+  inputs,
+  ...
+}: let
   finecmdline = pkgs.vimUtils.buildVimPlugin {
     name = "fine-cmdline";
     src = inputs.fine-cmdline;
   };
-in
-{
+in {
   programs = {
     neovim = {
       enable = true;
@@ -16,6 +19,7 @@ in
       withNodeJs = true;
       extraPackages = with pkgs; [
         bash-language-server
+        shellcheck
         lua-language-server
         gopls
         xclip
@@ -27,6 +31,7 @@ in
         yaml-language-server
         pyright
         marksman
+        alejandra # Add this if you haven't already
       ];
       plugins = with pkgs.vimPlugins; [
         alpha-nvim
@@ -63,6 +68,7 @@ in
       ];
       extraConfig = ''
         set noemoji
+        set termguicolors
         nnoremap : <cmd>FineCmdline<CR>
         lua << EOF
         local actions = require('telescope.actions')
@@ -94,8 +100,41 @@ in
         ${builtins.readFile ./nvim/plugins/fine-cmdline.lua}
         require("ibl").setup()
         require("bufferline").setup{}
-        require("lualine").setup({
-          icons_enabled = true,
+
+        require('lualine').setup({
+          options = {
+            icons_enabled = true,
+            theme = {
+              normal = {
+                a = { bg = '#799a63', fg = '#000000' },  -- Using the actual hex color you found
+                b = { bg = '#5e7b4f', fg = '#ffffff' },  -- Slightly darker variant
+                c = { bg = '#4a613e', fg = '#ffffff' }   -- Even darker variant
+              },
+              insert = {
+                a = { bg = '#799a63', fg = '#000000' },
+                b = { bg = '#5e7b4f', fg = '#ffffff' },
+                c = { bg = '#4a613e', fg = '#ffffff' }
+              },
+              visual = {
+                a = { bg = '#799a63', fg = '#000000' },
+                b = { bg = '#5e7b4f', fg = '#ffffff' },
+                c = { bg = '#4a613e', fg = '#ffffff' }
+              },
+              replace = {
+                a = { bg = '#799a63', fg = '#000000' },
+                b = { bg = '#5e7b4f', fg = '#ffffff' },
+                c = { bg = '#4a613e', fg = '#ffffff' }
+              }
+            }
+          },
+          sections = {
+            lualine_a = {'mode'},
+            lualine_b = {'branch', 'diff', 'diagnostics'},
+            lualine_c = {'filename'},
+            lualine_x = {'encoding', 'fileformat', 'filetype'},
+            lualine_y = {'progress'},
+            lualine_z = {'location'}
+          }
         })
       '';
     };

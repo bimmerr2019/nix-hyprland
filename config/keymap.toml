@@ -151,6 +151,7 @@ keymap = [
 	{ on = [ "g", "d" ],       run = "cd ~/Downloads",               desc = "Go to the downloads directory" },
 	{ on = [ "g", "p" ],       run = "cd ~/Pictures/Screenshots/",   desc = "Go to the screenshots directory" },
 	{ on = [ "g", "y" ],       run = "cd ~/Videos/youtube/",         desc = "Go to the youtube directory" },
+	{ on = [ "g", "b" ],       run = "cd ~/Nextcloud-public/textbooks/", desc = "Go to the book directory" },
 	{ on = [ "g", "<Space>" ], run = "cd --interactive",             desc = "Go to a directory interactively" },
 	{ on = [ "g", "c", "c" ],       run = "cd ~/.config",            desc = "Go to the config directory" },
 	{ on = [ "g", "c", "z" ],       run = "cd ~/.config/zsh",        desc = "Go to the zsh directory" },

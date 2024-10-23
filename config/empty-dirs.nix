@@ -1,6 +1,9 @@
-{ config, lib, pkgs, ... }:
-
 {
+  config,
+  lib,
+  pkgs,
+  ...
+}: {
   home.activation = {
     createDirectories = lib.hm.dag.entryAfter ["writeBoundary"] ''
       createDirIfNeeded() {
@@ -29,7 +32,7 @@
       createDirIfNeeded "${config.home.homeDirectory}/Movies"
       createDirIfNeeded "${config.home.homeDirectory}/Movies2"
       createDirIfNeeded "${config.home.homeDirectory}/Movies4"
-      
+
       # Handle Videos directory
       if [ -L "${config.home.homeDirectory}/Videos" ]; then
         echo "Symlink exists for Videos. Skipping directory creation."

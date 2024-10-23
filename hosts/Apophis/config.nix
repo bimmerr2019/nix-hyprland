@@ -1,6 +1,7 @@
 {
   config,
   pkgs,
+  inputs,
   lib,
   host,
   username,
@@ -147,7 +148,7 @@ in
   networking.timeServers = options.networking.timeServers.default ++ [ "pool.ntp.org" ];
 
   # Set your time zone.
-  time.timeZone = "Asia/Shanghai";
+  time.timeZone = "America/Phoenix";
 
   # Select internationalisation properties.
   i18n.defaultLocale = "en_US.UTF-8";
@@ -285,6 +286,8 @@ in
   documentation.man.enable = true;
   documentation.man.man-db.enable = true;
 
+  nix.nixPath = [ "nixpkgs=${inputs.nixpkgs}" ];
+
   environment.systemPackages = with pkgs; [
     vim
     wget
@@ -339,10 +342,17 @@ in
     swappy
     appimage-run
     networkmanagerapplet
+    nmap
+    whois
+    dig
+    pulsemixer
+    mkvtoolnix-cli
+    hplip
     yad
     inxi
     playerctl
     nh
+    nixd # Add this
     nixfmt-rfc-style
     discord
     swww
@@ -358,7 +368,6 @@ in
     greetd.tuigreet
     sl
     newsboat
-    calibre
     signal-desktop
     # session-desktop-appimage
     # simplex-chat-desktop
@@ -720,7 +729,7 @@ in
 # .rw-r--r-- 290 root 30 Sep 08:35  jp-tyo-wg-203.conf
   # networking.wg-quick.interfaces.wg0.configFile = "/etc/nixos/wireguard/jp-tok-jp2.conf";
   # networking.wg-quick.interfaces.wg0.configFile = "/etc/nixos/wireguard/tw-tai-tw1.conf";
-  # networking.wg-quick.interfaces.wg0.configFile = "/etc/nixos/wireguard/us-pho-us-az1.conf";
+  networking.wg-quick.interfaces.wg0.configFile = "/etc/nixos/wireguard/us-pho-us-az1.conf";
 
   # OpenGL
   hardware.graphics.enable = true;

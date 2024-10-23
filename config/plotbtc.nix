@@ -1,6 +1,9 @@
-{ config, pkgs, lib, ... }:
-
 {
+  config,
+  pkgs,
+  lib,
+  ...
+}: {
   home.activation = {
     cloneAndUpdateRepo = lib.hm.dag.entryAfter ["writeBoundary"] ''
       REPO_URL="https://github.com/bimmerr2019/plotbtc.git"

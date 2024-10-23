@@ -1,5 +1,8 @@
-{ lib, stdenv, fetchurl }:
-
+{
+  lib,
+  stdenv,
+  fetchurl,
+}:
 stdenv.mkDerivation rec {
   pname = "oh-my-posh";
   version = "23.20.0";
@@ -24,4 +27,3 @@ stdenv.mkDerivation rec {
     platforms = platforms.linux;
   };
 }
-
