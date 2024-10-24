@@ -1,12 +1,9 @@
 { config, pkgs, ... }:
 
 let
-  pythonEnv = pkgs.python39.withPackages (ps: with ps; [
-    pyqt5
-    python-dateutil
-    pyqtwebengine
-    # Add any other Python packages your QTodoTxt application needs
-  ]);
+  pythonConfigs = import ../../config/python.nix { inherit pkgs; };
+  pythonEnv = pythonConfigs.qtodotxtPython;
+
 
   launchQTodoTxt = pkgs.writeShellScriptBin "launch-qtodotxt" ''
     #!/bin/sh

@@ -1,6 +1,7 @@
 {
-  config,
   pkgs,
+  username,
+  host,
   inputs,
   ...
 }: let
@@ -8,6 +9,7 @@
     name = "fine-cmdline";
     src = inputs.fine-cmdline;
   };
+  pythonConfigs = import ./python.nix { inherit pkgs; };
 in {
   programs = {
     neovim = {
@@ -18,6 +20,7 @@ in {
       vimdiffAlias = true;
       withNodeJs = true;
       extraPackages = with pkgs; [
+        nixd # Add this
         bash-language-server
         shellcheck
         lua-language-server
@@ -27,11 +30,11 @@ in {
         luajitPackages.lua-lsp
         nil
         rust-analyzer
-        #nodePackages.bash-language-server
         yaml-language-server
+        pythonConfigs.basePython  # This already includes python, pip, pylint, black, etc.
         pyright
         marksman
-        alejandra # Add this if you haven't already
+        alejandra
       ];
       plugins = with pkgs.vimPlugins; [
         alpha-nvim
@@ -48,6 +51,10 @@ in {
         nvim-cmp
         nvim-surround
         nvim-lspconfig
+        nvim-dap  # For debugging
+        nvim-dap-python  # Python specific debug adapter
+        neotest  # For running tests
+        neotest-python  # Python test adapter
         cmp-nvim-lsp
         cmp-buffer
         luasnip
@@ -85,6 +92,9 @@ in {
         EOF
       '';
       extraLuaConfig = ''
+        vim.g.username = "${username}"
+        vim.g.host = "${host}"
+
         ${builtins.readFile ./nvim/options.lua}
         ${builtins.readFile ./nvim/keymaps.lua}
         ${builtins.readFile ./nvim/plugins/alpha.lua}
@@ -100,7 +110,6 @@ in {
         ${builtins.readFile ./nvim/plugins/fine-cmdline.lua}
         require("ibl").setup()
         require("bufferline").setup{}
-
         require('lualine').setup({
           options = {
             icons_enabled = true,

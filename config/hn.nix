@@ -1,7 +1,5 @@
 {
-  config,
   pkgs,
-  lib,
   ...
 }: let
   hn-text = pkgs.buildGoModule rec {

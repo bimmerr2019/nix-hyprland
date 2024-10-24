@@ -10,14 +10,8 @@
 }:
 let
   inherit (import ./variables.nix) keyboardLayout;
-  myPython = pkgs.python39.withPackages (ps: with ps; [
-    requests
-    pyquery
-    python-dateutil
-    pyqt5
-    pyqtwebengine
-    # Add any other packages you need
-  ]);
+  pythonConfigs = import ../../config/python.nix { inherit pkgs; };
+  myPython = pythonConfigs.basePython;
 in
 {
   imports = [
@@ -352,7 +346,6 @@ in
     inxi
     playerctl
     nh
-    nixd # Add this
     nixfmt-rfc-style
     discord
     swww
