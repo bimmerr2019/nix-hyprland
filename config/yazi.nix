@@ -5,13 +5,13 @@ let
     owner = "Reledia";
     repo = "glow.yazi";
     rev = "master";  # You might want to pin this to a specific commit or tag for stability
-    sha256 = "sha256-d73C8s8p85c0xfq8Nfzlnp83JUakMPbviQDFCX0G+qE=";  # Replace this with the actual hash
+    sha256 = "sha256-bqaFqjlQ/VgMdt2VVjEI8cIkA9THjOZDgNspNicxlbc=";  # Replace this with the actual hash
   };
   yaziHexyl = pkgs.fetchFromGitHub {
     owner = "Reledia";
     repo = "hexyl.yazi";
     rev = "master";  # You might want to pin this to a specific commit or tag for stability
-    sha256 = "sha256-Ggkns5gEnciyRBKM4+5l51DVP2GhVm86cb6JOige1XM=";  # Replace this with the actual hash
+    sha256 = "sha256-9rPJcgMYtSY5lYnFQp3bAhaOBdNUkBaN1uMrjen6Z8g=";  # Replace this with the actual hash
   };
   yaziMiller = pkgs.fetchFromGitHub {
     owner = "Reledia";
