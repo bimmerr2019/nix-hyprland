@@ -57,6 +57,15 @@ in
     # plymouth.enable = true;
   };
 
+  # LUKS encryption
+  # boot.initrd.luks.devices = {
+  #   crypted = {
+  #     device = "/dev/disk/by-uuid/<the uuid of /dev/sdb2>";
+  #     preLVM = true;
+  #     allowDiscards = true;
+  #   };
+  # };
+
 #Put appImages in the /opt diretory:
   # Create /opt/appimages directory
   system.activationScripts = {
