@@ -309,6 +309,7 @@ in
     pyprland
     alacritty
     zathura
+    calibre
     fd
     libvirt
     parted
@@ -678,6 +679,9 @@ in
 
   # Enable sound with pipewire.
   hardware.pulseaudio.enable = false;
+
+  # Trying this to get sound working:
+  hardware.enableAllFirmware = true;
 
   # Security / Polkit
   # security.rtkit.enable = true;
