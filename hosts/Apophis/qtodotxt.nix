@@ -39,7 +39,7 @@ in
     qt5.qtquickcontrols
     qt5.qtquickcontrols2
     qt5.qtgraphicaleffects
-    qt5ct
+    libsForQt5.qt5ct
     (makeDesktopItem {
       name = "QTodoTxt";
       exec = "launch-qtodotxt";

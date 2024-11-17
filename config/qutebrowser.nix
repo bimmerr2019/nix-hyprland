@@ -44,15 +44,15 @@
         ];
       };
       fonts = {
-        default_size = lib.mkForce "20pt";
-        hints = "bold 20px default_family";
+        default_size = lib.mkForce "18pt";
+        hints = "bold 18px default_family";
       };
       url = {
         default_page = "about:blank";
-        start_pages = [ "http://localhost:3000/feed/subscriptions" ];
+        start_pages = [ "https://www.zerohedge.com/" ];
       };
       window.transparent = true;
-      zoom.default = "200%";
+      zoom.default = "180%";
     };
     
     searchEngines = {

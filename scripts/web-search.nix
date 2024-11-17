@@ -57,7 +57,7 @@ pkgs.writeShellScriptBin "web-search" ''
 
     if [[ -n "$platform" ]]; then
       # Use zenity for query input
-      query=$(${pkgs.zenity}/bin/zenity --entry --title="What Search term would you like dear?" --text="" --width=400)
+      query=$(GDK_BACKEND=x11 ${pkgs.zenity}/bin/zenity --entry --title="What Search term would you like dear?" --text="" --width=400)
 
       if [[ -n "$query" ]]; then
         ${urls}

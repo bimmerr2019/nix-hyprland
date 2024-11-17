@@ -3,8 +3,10 @@
 
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
-    home-manager.url = "github:nix-community/home-manager/master";
-    home-manager.inputs.nixpkgs.follows = "nixpkgs";
+    home-manager = {
+      url = "github:nix-community/home-manager/master";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
     stylix.url = "github:danth/stylix";
     fine-cmdline = {
       url = "github:VonHeikemen/fine-cmdline.nvim";
@@ -32,6 +34,10 @@
             inputs.stylix.nixosModules.stylix
             home-manager.nixosModules.home-manager
             {
+              nixpkgs.config = {
+                allowUnfree = true;
+                allowUnsupportedSystem = true;
+              };
               home-manager.extraSpecialArgs = {
                 inherit username;
                 inherit inputs;

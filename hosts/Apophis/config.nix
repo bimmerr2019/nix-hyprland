@@ -58,13 +58,13 @@ in
   };
 
   # LUKS encryption
-  # boot.initrd.luks.devices = {
-  #   crypted = {
-  #     device = "/dev/disk/by-uuid/<the uuid of /dev/sdb2>";
-  #     preLVM = true;
-  #     allowDiscards = true;
-  #   };
-  # };
+ # boot.initrd.luks.devices = {
+ #   crypted = {
+ #     device = "/dev/disk/by-uuid/48781bd8-267a-4417-a4a3-be84bd59ac5b";
+ #     preLVM = true;
+ #     allowDiscards = true;
+ #   };
+ # };
 
 #Put appImages in the /opt diretory:
   # Create /opt/appimages directory
@@ -85,7 +85,10 @@ in
   # Styling Options
   stylix = {
     enable = true;
-    image = ../../config/wallpapers/0122.jpg;
+    image = builtins.fetchurl {
+      url = "file://${toString ../../config/wallpapers/0169.jpg}";
+      sha256 = "sha256:00vm1zblizklx7bvsmmrrzmk7qmgln4xkrgalk6dmdbg8jdsgpjn"; # Leave empty first, Nix will tell you the correct hash
+    };
     # base16Scheme = {
     #   base00 = "232136";
     #   base01 = "2a273f";
@@ -125,17 +128,17 @@ in
         name = "Montserrat";
       };
       sizes = {
-        applications = 12;
-        terminal = 15;
-        desktop = 11;
-        popups = 12;
+        applications = 22;
+        terminal = 22;
+        desktop = 22;
+        popups = 22;
       };
     };
   };
 
   # Extra Module Options
   # drivers.amdgpu.enable = false;
-   drivers.nvidia.enable = false;
+   drivers.nvidia.enable = true;
    # drivers.nvidia-prime = {
    #    enable = true;
    #    intelBusID = "PCI:0:2:0";
@@ -169,6 +172,9 @@ in
   };
 
   programs = {
+    ecryptfs = {
+      enable = true;
+    };
     proxychains = {
       enable = true;
       proxyDNS = true;
@@ -285,7 +291,7 @@ in
     mutableUsers = true;
   };
 
-  documentation.man.generateCaches = true;
+  documentation.man.generateCaches = false;
   documentation.man.enable = true;
   documentation.man.man-db.enable = true;
 
@@ -302,14 +308,11 @@ in
     htop
     wofi
     groff
-    man-db
-    man-pages
     brave
     udiskie
     pyprland
     alacritty
     zathura
-    calibre
     fd
     libvirt
     parted
@@ -328,6 +331,9 @@ in
     wl-clipboard
     pciutils
     ffmpeg
+    calibre
+    nvtopPackages.full
+    nb
     socat
     cowsay
     ripgrep
@@ -350,6 +356,7 @@ in
     networkmanagerapplet
     nmap
     whois
+    unar
     dig
     pulsemixer
     mkvtoolnix-cli
@@ -369,7 +376,7 @@ in
     mpv
     pavucontrol
     tree
-    neovide
+    # neovide
     greetd.tuigreet
     sl
     newsboat
@@ -400,7 +407,11 @@ in
 
     # random stuff i found in my arch computer.
     proxychains
-    qbittorrent-qt5
+    ecryptfs
+    openssl
+    untrunc-anthwlock
+    conda
+    qbittorrent
     nfs-utils
     screenkey
     tlrc
@@ -420,13 +431,141 @@ in
     syncthing
     yubioath-flutter
     poppler_utils
+    tealdeer
+    zenity
+
+    # Basic build tools
+    gnumake
+    gcc
+    binutils
+    qrencode
+    freetube
+    
+    # Additional common build tools
+    pkg-config
+    cmake
 
   # Optionally, add a convenient way to run AppImages
     (writeShellScriptBin "run-appimage" ''
       ${appimage-run}/bin/appimage-run /opt/appimages/$1
     '')
 
+    (writeShellScriptBin "tmux-restore" ''
+      ${pkgs.tmux}/bin/tmux start-server
+      ${pkgs.tmux}/bin/tmux new-session -d
+      ${pkgs.tmux}/bin/tmux run-shell "${pkgs.tmuxPlugins.resurrect}/share/tmux-plugins/resurrect/scripts/restore.sh"
+      ${pkgs.tmux}/bin/tmux attach-session -t 0
+    '')
+
+    (writeScriptBin "music-layout" ''
+      #!${pkgs.bash}/bin/bash
+      
+      # Create new window or use existing one
+      tmux new-window -n music || tmux select-window -t music
+      
+      # Split the window vertically into 3 panes
+      tmux split-window -v
+      tmux split-window -h
+      
+      # Select and run command in each pane
+      tmux select-pane -t 0
+      tmux send-keys "ncmpcpp -s media_library" C-m
+      
+      tmux select-pane -t 1
+      tmux send-keys "ncmpcpp -s playlist_editor" C-m
+      
+      tmux select-pane -t 2
+      tmux send-keys "ncmpcpp -s playlist" C-m
+    '')
+
+# Wireguard control:
+    (writeScriptBin "wg-toggle" ''
+      #!${stdenv.shell}
+      WG_DIR="/etc/nixos/wireguard"
+
+      # Check if running as root
+      if [ "$(id -u)" -ne 0 ]; then
+        exec sudo "$0" "$@"
+      fi
+
+      # Check if wireguard directory exists
+      if [ ! -d "$WG_DIR" ]; then
+        echo "Error: Wireguard directory ($WG_DIR) does not exist."
+        echo "Please create the directory and add your configuration files."
+        exit 1
+      fi
+
+      # Check if directory is empty (no .conf files)
+      if [ -z "$(find "$WG_DIR" -name "*.conf" 2>/dev/null)" ]; then
+        echo "Error: No Wireguard configuration files found in $WG_DIR"
+        echo "Please add your .conf files to the directory."
+        exit 1
+      fi
+
+      # Function to get current running interface (if any)
+      get_running_interface() {
+        wg show interfaces 2>/dev/null
+      }
+
+      # If WireGuard is running, just turn it off
+      RUNNING_INTERFACE=$(get_running_interface)
+      if [ -n "$RUNNING_INTERFACE" ]; then
+        CONFIG="$WG_DIR/$RUNNING_INTERFACE.conf"
+        wg-quick down "$CONFIG"
+        echo "WireGuard disconnected"
+        exit 0
+      fi
+
+      # If we get here, WireGuard is not running, so show the menu
+      echo "Select WireGuard configuration to activate:"
+      
+      # Create array of config files
+      configs=()
+      while IFS= read -r -d $'\0' file; do
+        configs+=("$file")
+      done < <(find "$WG_DIR" -name "*.conf" -print0 | sort -z)
+
+      # Display menu
+      i=1
+      for config in "''${configs[@]}"; do
+        filename=$(basename "$config" .conf)
+        echo "$i) $filename"
+        ((i++))
+      done
+
+      # Get user choice
+      read -p "Enter number (1-$((i-1))): " choice
+
+      # Validate input
+      if ! [[ "$choice" =~ ^[0-9]+$ ]] || [ "$choice" -lt 1 ] || [ "$choice" -gt $((i-1)) ]; then
+        echo "Invalid selection"
+        exit 1
+      fi
+
+      # Convert choice to array index (0-based)
+      ((choice--))
+      
+      # Get selected config file
+      selected_config="''${configs[$choice]}"
+      
+      # Extract interface name from filename
+      INTERFACE=$(basename "$selected_config" .conf)
+      
+      # Activate the selected configuration
+      wg-quick up "$selected_config"
+      echo "WireGuard connected using $INTERFACE"
+    '')
+
   # Add a desktop file for each appimage here:
+    (makeDesktopItem {
+      name = "Nunchuk";
+      desktopName = "Nunchuk";
+      exec = "${pkgs.appimage-run}/bin/appimage-run /opt/appimages/nunchuk-linux-1.9.39.AppImage";
+      icon = ""; # Leave empty if there's no icon
+      comment = "Nunchuk Application";
+      categories = [ "Utility" ];
+      terminal = false;
+    })
     (makeDesktopItem {
       name = "Session";
       desktopName = "Session";
@@ -485,7 +624,7 @@ in
   fonts = {
     packages = with pkgs; [
       noto-fonts-emoji
-      noto-fonts-cjk
+      noto-fonts-cjk-sans
       font-awesome
       # symbola
       material-icons
@@ -529,29 +668,29 @@ in
       # Add these lines to ensure GPU support
     };
     # Enable Invidious
-    invidious = {
-       enable = true;
-       port = 3000;
-       settings = lib.mkForce {
-         check_tables = true;
-         db = {
-           dbname = "invidious";
-           host = "";
-           password = "";
-           port = 3000;
-           user = "invidious";
-         };
-         host_binding = "0.0.0.0";
-         default_user_preferences = {
-           locale = "en-US";
-           region = "US";
-         };
-         captions = [
-           "English"
-           "English (auto-generated)"
-         ];
-      };
-    };
+    # invidious = {
+    #    enable = true;
+    #    port = 3000;
+    #    settings = lib.mkForce {
+    #      check_tables = true;
+    #      db = {
+    #        dbname = "invidious";
+    #        host = "";
+    #        password = "";
+    #        port = 3000;
+    #        user = "invidious";
+    #      };
+    #      host_binding = "0.0.0.0";
+    #      default_user_preferences = {
+    #        locale = "en-US";
+    #        region = "US";
+    #      };
+    #      captions = [
+    #        "English"
+    #        "English (auto-generated)"
+    #      ];
+    #   };
+    # };
     greetd = {
       enable = true;
       vt = 3;
@@ -613,44 +752,35 @@ in
     };
   };
 
-  systemd.services.pull-open-webui = {
-    description = "Pull Open WebUI Docker image";
-    after = [ "network-online.target" ];
-    wants = [ "network-online.target" ];
-    before = [ "open-webui.service" ];
-    serviceConfig = {
-      Type = "oneshot";
-      ExecStart = "${pkgs.podman}/bin/podman pull ghcr.io/open-webui/open-webui:main";
-      RemainAfterExit = true;
-    };
+systemd.services.pull-open-webui = {
+  description = "Pull Open WebUI Docker image";
+  after = [ "network-online.target" ];
+  wants = [ "network-online.target" ];
+  serviceConfig = {
+    Type = "oneshot";
+    ExecStart = ''
+      ${pkgs.bash}/bin/bash -c '\
+        if ! ${pkgs.podman}/bin/podman image exists ghcr.io/open-webui/open-webui:main; then \
+          ${pkgs.podman}/bin/podman pull ghcr.io/open-webui/open-webui:main; \
+        fi'
+    '';
+    RemainAfterExit = true;
+    TimeoutStartSec = "30";
+    StartLimitIntervalSec = "300";  # 5 minutes, changed from StartLimitInterval
+    StartLimitBurst = "3";
+    FailureAction = "none";
+    SuccessAction = "none";
   };
+};
 
-  systemd.services.open-webui = {
-    description = "Open WebUI";
-    after = [ "network.target" "pull-open-webui.service" "podman.socket" ];
-    requires = [ "pull-open-webui.service" "podman.socket" ];
-    wantedBy = [ "multi-user.target" ];
-    serviceConfig = {
-      ExecStartPre = [
-        "${pkgs.podman}/bin/podman stop -i open-webui || true"
-        "${pkgs.podman}/bin/podman rm -f open-webui || true"
-      ];
-      ExecStart = ''
-        ${pkgs.podman}/bin/podman run \
-          --rm \
-          --network=host \
-          -v open-webui:/app/backend/data \
-          -e OLLAMA_BASE_URL=http://127.0.0.1:11434 \
-          --name open-webui \
-          ghcr.io/open-webui/open-webui:main
-      '';
-      ExecStop = "${pkgs.podman}/bin/podman stop open-webui";
-      ExecStopPost = "${pkgs.podman}/bin/podman rm open-webui";
-      TimeoutStartSec = "20m";
-      Restart = "always";
-      Type = "simple";
-    };
-  };
+systemd.services.open-webui = {
+  description = "Open WebUI";
+  after = [ "network.target" "podman.socket" ];  # Remove pull-open-webui.service from after
+  requires = [ "podman.socket" ];  # Remove pull-open-webui.service from requires
+  wants = [ "pull-open-webui.service" ];  # Add as a weak dependency instead
+  wantedBy = [ "multi-user.target" ];
+  # ... rest of the service config
+};
 
   # Ensure podman.socket is enabled
   systemd.sockets.podman = {

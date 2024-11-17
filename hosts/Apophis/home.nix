@@ -37,6 +37,7 @@ in {
   home.username = "${username}";
   home.homeDirectory = "/home/${username}";
   home.stateVersion = "23.11";
+  home.enableNixpkgsReleaseCheck = false;
 
   # Import Program Configurations
   imports = [
@@ -325,6 +326,7 @@ in {
     };
     gtk4.extraConfig = {
       gtk-application-prefer-dark-theme = 1;
+      color-scheme = "prefer-dark"; # or "prefer-dark" if you want dark theme
     };
   };
   qt = {
@@ -475,6 +477,14 @@ in {
       '';
     };
     zoxide.enable = true;
+    tealdeer = {
+      enable = true;
+      settings = {
+        updates = {
+          auto_update = true;
+        };
+      };
+    };
     gh.enable = true;
     btop = {
       enable = true;
@@ -511,7 +521,7 @@ in {
       settings = {
         # ncmpcpp_directory = "~/.config/ncmpcpp";
         lyrics_directory = "~/.local/share/lyrics";
-        # mpd_music_dir = "~/Music";
+        # mpd_music_dir = "/home/bimmer/Music";
         message_delay_time = "1";
         # visualizer_type = "spectrum";
         song_list_format = "{$4%a - }{%t}|{$8%f$9}$R{$3(%l)$9}";
@@ -664,20 +674,15 @@ in {
     kitty = {
       enable = true;
       package = pkgs.kitty;
+      font.size = config.stylix.fonts.sizes.terminal;
       settings = {
-        scrollback_lines = 2000;
+        scrollback_lines = 10000;
         wheel_scroll_min_lines = 1;
         window_padding_width = 4;
         confirm_os_window_close = 0;
-        # background_opacity = lib.mkForce "0.85";
       };
       extraConfig = ''
-                font_size 22.0
-                tab_bar_style fade
-                tab_fade 1
-                active_tab_font_style   bold
-                inactive_tab_font_style bold
-                map alt+u open_url_with_hints
+        map alt+u open_url_with_hints
         map ctrl+shift+j scroll_line_down
         map ctrl+shift+k scroll_line_up
         map ctrl+shift+u scroll_page_up
@@ -736,6 +741,7 @@ in {
         #fi
       '';
       initExtra = ''
+        source ${scriptFile}
         fastfetch
         if [ -f $HOME/.bashrc-personal ]; then
           source $HOME/.bashrc-personal
@@ -764,40 +770,6 @@ in {
           hide_cursor = true;
           no_fade_in = false;
         };
-        background = [
-          {
-            path = "/home/${username}/Pictures/Wallpapers/0001.jpg";
-            blur_passes = 3;
-            blur_size = 8;
-          }
-        ];
-        image = [
-          {
-            path = "/home/${username}/.config/face.jpg";
-            size = 350;
-            border_size = 4;
-            border_color = "rgb(0C96F9)";
-            rounding = -1; # Negative means circle
-            position = "0, 200";
-            halign = "center";
-            valign = "center";
-          }
-        ];
-        input-field = [
-          {
-            size = "200, 50";
-            position = "0, -80";
-            monitor = "";
-            dots_center = true;
-            fade_on_empty = false;
-            font_color = "rgb(CFE6F4)";
-            inner_color = "rgb(657DC2)";
-            outer_color = "rgb(0D0E15)";
-            outline_thickness = 5;
-            placeholder_text = "Password...";
-            shadow_passes = 2;
-          }
-        ];
       };
     };
   };

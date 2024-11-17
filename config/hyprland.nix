@@ -42,13 +42,13 @@ with lib;
           env = MOZ_ENABLE_WAYLAND, 1
           exec-once = dbus-update-activation-environment --systemd --all
           exec-once = systemctl --user import-environment QT_QPA_PLATFORMTHEME WAYLAND_DISPLAY XDG_CURRENT_DESKTOP QT_QPA_PLATFORM
-          exec-once = pkill swww || true; swww init && swww img /home/${username}/Pictures/Wallpapers/0122.jpg
+          exec-once = pkill swww || true; swww init && swww img /home/${username}/Pictures/Wallpapers/0169.jpg
           exec-once = pkill waybar || true; waybar
           exec-once = pkill swaync || true; swaync
           exec-once = pkill nm-applet || true; nm-applet --indicator
           exec-once = pkill lxqt-policykit-agent || true; lxqt-policykit-agent
           exec-once = pkill pypr || true; pypr
-          exec-once = restart-nextcloud-client.sh &
+          # exec-once = restart-nextcloud-client.sh &
           exec-once=[workspace 1 silent] kitty tmux
           exec-once=[workspace 2 silent] qutebrowser
           exec-once=[workspace 3 silent] ${pkgs.appimage-run}/bin/appimage-run /opt/appimages/simplex-desktop-x86_64.AppImage
@@ -131,10 +131,10 @@ with lib;
           }
           decoration {
             rounding = 10
-            drop_shadow = true
-            shadow_range = 4
-            shadow_render_power = 3
-            col.shadow = rgba(1a1a1aee)
+            # drop_shadow = true
+            # shadow_range = 4
+            # shadow_render_power = 3
+            # col.shadow = rgba(1a1a1aee)
             blur {
                 enabled = true
                 size = 5

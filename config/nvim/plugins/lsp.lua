@@ -1,7 +1,18 @@
+-- Create base capabilities that will be used by all LSP servers
+local base_capabilities = vim.lsp.protocol.make_client_capabilities()
+base_capabilities = require('cmp_nvim_lsp').default_capabilities(base_capabilities)
+base_capabilities.textDocument.semanticTokens = nil
+
+-- Create a function for common LSP setup
+local function create_capabilities()
+    local caps = vim.deepcopy(base_capabilities)
+    return caps
+end
+
 local lspconfig = require("lspconfig")
 
-require('lspconfig').lua_ls.setup { -- Add this config block for Lua
-  capabilities = require('cmp_nvim_lsp').default_capabilities(),
+require('lspconfig').lua_ls.setup {
+  capabilities = create_capabilities(),
   settings = {
     Lua = {
       runtime = {
@@ -29,7 +40,7 @@ require('lspconfig').lua_ls.setup { -- Add this config block for Lua
 }
 
 require('lspconfig').pyright.setup({
-  capabilities = require('cmp_nvim_lsp').default_capabilities(),
+  capabilities = create_capabilities(),
   settings = {
     python = {
       analysis = {
@@ -63,22 +74,28 @@ require('lspconfig').pyright.setup({
   end,
 })
 
-require('lspconfig').marksman.setup {}
-require('lspconfig').rust_analyzer.setup {}
-require('lspconfig').yamlls.setup {}
+require('lspconfig').marksman.setup {
+  capabilities = create_capabilities()
+}
+
+require('lspconfig').rust_analyzer.setup {
+  capabilities = create_capabilities()
+}
+
+require('lspconfig').yamlls.setup {
+  capabilities = create_capabilities()
+}
 
 require('lspconfig').bashls.setup {
-  capabilities = require('cmp_nvim_lsp').default_capabilities(),
+  capabilities = create_capabilities(),
   settings = {
     bashIde = {
       globPattern = "*@(.sh|.inc|.bash|.command)",
-      shellcheckPath = "shellcheck", -- make sure shellcheck is installed
+      shellcheckPath = "shellcheck",
       shellcheckArguments = {},
-      explainshellEndpoint = "",     -- optional: you can set up explainshell.com
+      explainshellEndpoint = "",
       includeAllWorkspaceSymbols = true,
       highlightParsingErrors = true,
-      -- optional: format on save
-      -- formatOnSave = true,
     },
   },
   filetypes = { "sh", "bash" },
@@ -86,7 +103,17 @@ require('lspconfig').bashls.setup {
 }
 
 require("lspconfig").nixd.setup({
-  capabilities = require('cmp_nvim_lsp').default_capabilities(),
+  capabilities = (function()
+    local capabilities = create_capabilities()
+    -- Explicitly disable semantic tokens for nixd
+    capabilities.textDocument.semanticTokens = nil
+    capabilities.textDocument.semanticTokensProvider = nil
+    return capabilities
+  end)(),
+  on_init = function(client)
+    -- Disable semantic tokens on init
+    client.server_capabilities.semanticTokensProvider = nil
+  end,
   cmd = { "nixd" },
   settings = {
     nixd = {
@@ -95,7 +122,7 @@ require("lspconfig").nixd.setup({
         expr2 = string.format('import (builtins.getFlake "/home/%s/zaneyos").inputs.nixpkgs { }', vim.g.username)
       },
       formatting = {
-        command = { "alejandra" }, -- or nixfmt or nixpkgs-fmt
+        command = { "alejandra" },
       },
       options = {
         nixos = {
@@ -108,7 +135,9 @@ require("lspconfig").nixd.setup({
     },
   },
   filetypes = { "nix" },
-  on_attach = function(client, _) -- Change bufnr to _ since we're not using it
+  on_attach = function(client, _)
+    -- Disable semantic tokens on attach
+    client.server_capabilities.semanticTokensProvider = nil
     -- Enable formatting capability
     client.server_capabilities.documentFormattingProvider = true
   end,
@@ -118,7 +147,6 @@ vim.api.nvim_create_autocmd("FileType", {
   pattern = "nix",
   callback = function()
     vim.keymap.set('n', '<leader>fg', function()
-      -- Remove unused variables
       vim.api.nvim_exec([[
         let view = winsaveview()
         %!alejandra -q
